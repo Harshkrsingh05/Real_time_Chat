@@ -1,0 +1,21 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Temporary permissive rules for development
+    // Replace with more secure rules in production
+    
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+
+// For Storage
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
