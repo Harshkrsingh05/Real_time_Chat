@@ -161,7 +161,7 @@ export const SimpleChatRoom: React.FC = () => {
       </div>
 
       {/* Message Input */}
-      <div className="bg-white border-t p-4">
+      <div className="bg-white border-t p-4 text-gray-900">
         <form onSubmit={sendMessage} className="flex space-x-4">
           <input
             type="text"
