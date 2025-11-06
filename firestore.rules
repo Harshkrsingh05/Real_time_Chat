@@ -28,11 +28,8 @@ service cloud.firestore {
     
     // Users collection
     match /users/{userId} {
-      // Users can read their own data and data of users they chat with
-      allow read: if isAuthenticated() && (
-        isOwner(userId) || 
-        exists(/databases/$(database)/documents/chatRooms/$(userId))
-      );
+      // Users can read any authenticated user's data (for searching and direct messaging)
+      allow read: if isAuthenticated();
       
       // Users can only create their own profile
       allow create: if isAuthenticated() && 

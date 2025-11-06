@@ -3,12 +3,20 @@
 import React from 'react';
 import { Hash, MessageCircle, Users } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { DirectMessagesPanel } from './DirectMessagesPanel';
+import { ChatRoom } from '@/types';
 
 interface SidebarProps {
   className?: string;
+  onSelectChat?: (chatRoom: ChatRoom | null) => void;
+  selectedChatId?: string;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ 
+  className = '',
+  onSelectChat,
+  selectedChatId 
+}) => {
   const { userProfile, signOut } = useAuth();
 
   return (
@@ -34,15 +42,22 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
       </div>
 
       {/* Chat Rooms */}
-      <div className="flex-1 p-4">
+      <div className="flex-1 overflow-y-auto">
         <div className="space-y-2">
           {/* General Room */}
-          <div className="mb-6">
+          <div className="p-4 border-b">
             <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
               Public Rooms
             </h3>
             
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 cursor-pointer hover:bg-blue-100 transition-colors">
+            <div 
+              onClick={() => onSelectChat && onSelectChat(null)}
+              className={`rounded-lg p-3 cursor-pointer transition-colors ${
+                selectedChatId === null 
+                  ? 'bg-blue-50 border border-blue-200' 
+                  : 'bg-gray-50 hover:bg-gray-100'
+              }`}
+            >
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
                   <Hash className="w-4 h-4 text-white" />
@@ -56,29 +71,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
             </div>
           </div>
 
-          {/* Coming Soon Section */}
-          <div>
-            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
-              Direct Messages
-            </h3>
-            
-            <div className="border border-gray-200 rounded-lg p-4 text-center bg-gray-50">
-              <div className="flex flex-col items-center space-y-2">
-                <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                  <MessageCircle className="w-5 h-5 text-gray-400" />
-                </div>
-                <div className="text-sm font-medium text-gray-700">
-                  Person to Person Chat
-                </div>
-                <div className="text-xs text-gray-500">
-                  Coming Soon
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* Direct Messages Panel */}
+          {onSelectChat && (
+            <DirectMessagesPanel 
+              onSelectChat={onSelectChat}
+              selectedChatId={selectedChatId}
+            />
+          )}
 
           {/* Future Features */}
-          <div className="mt-6">
+          <div className="p-4 border-t">
             <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
               More Features
             </h3>
@@ -86,15 +88,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
             <div className="space-y-2">
               <div className="flex items-center space-x-3 p-2 text-gray-400">
                 <Users className="w-4 h-4" />
-                <span className="text-sm">Group Chats - Coming Soon</span>
+                <span className="text-sm">Group Chats </span>
               </div>
               <div className="flex items-center space-x-3 p-2 text-gray-400">
                 <MessageCircle className="w-4 h-4" />
-                <span className="text-sm">File Sharing - Coming Soon</span>
+                <span className="text-sm">File Sharing</span>
               </div>
               <div className="flex items-center space-x-3 p-2 text-gray-400">
                 <Users className="w-4 h-4" />
-                <span className="text-sm">Voice Calls - Coming Soon</span>
+                <span className="text-sm">Voice Calls</span>
               </div>
             </div>
           </div>

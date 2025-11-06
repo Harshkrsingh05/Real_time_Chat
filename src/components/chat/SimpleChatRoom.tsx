@@ -12,7 +12,7 @@ import {
   Timestamp 
 } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { Send, LogOut } from 'lucide-react';
+import { Send, LogOut, ArrowLeft } from 'lucide-react';
 
 interface SimpleMessage {
   id: string;
@@ -22,7 +22,11 @@ interface SimpleMessage {
   timestamp: Timestamp;
 }
 
-export const SimpleChatRoom: React.FC = () => {
+interface SimpleChatRoomProps {
+  onBack?: () => void;
+}
+
+export const SimpleChatRoom: React.FC<SimpleChatRoomProps> = ({ onBack }) => {
   const { user, userProfile, signOut } = useAuth();
   const [messages, setMessages] = useState<SimpleMessage[]>([]);
   const [newMessage, setNewMessage] = useState('');
@@ -88,10 +92,22 @@ export const SimpleChatRoom: React.FC = () => {
   return (
     <div className="flex flex-col h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white border-b px-6 py-4 flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold text-gray-900">General Chat Room</h1>
-          <p className="text-sm text-gray-600">Welcome, {userProfile?.displayName || user?.email}</p>
+      <div className="bg-white border-b px-4 py-4 flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          {/* Back button for mobile */}
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors lg:hidden"
+            >
+              <ArrowLeft className="w-5 h-5 text-gray-600" />
+            </button>
+          )}
+          
+          <div>
+            <h1 className="text-xl font-bold text-gray-900">General Chat Room</h1>
+            <p className="text-sm text-gray-600">Welcome, {userProfile?.displayName || user?.email}</p>
+          </div>
         </div>
         
         <button
@@ -99,7 +115,7 @@ export const SimpleChatRoom: React.FC = () => {
           className="flex items-center space-x-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
         >
           <LogOut className="w-4 h-4" />
-          <span>Sign Out</span>
+          <span className="hidden sm:inline">Sign Out</span>
         </button>
       </div>
 
@@ -169,7 +185,7 @@ export const SimpleChatRoom: React.FC = () => {
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Type your message..."
             disabled={loading}
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100"
+            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 text-black"
           />
           
           <button

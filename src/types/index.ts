@@ -1,4 +1,4 @@
-import { Timestamp } from 'firebase/firestore';
+import { Timestamp, FieldValue } from 'firebase/firestore';
 
 export interface User {
   uid: string;
@@ -17,14 +17,14 @@ export interface ChatRoom {
   type: 'direct' | 'group';
   participants: string[]; // User UIDs
   createdBy: string;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
+  createdAt: Timestamp | FieldValue;
+  updatedAt: Timestamp | FieldValue;
   lastMessage?: {
-    id: string;
+    id?: string;
     text: string;
     senderId: string;
     senderName: string;
-    timestamp: Timestamp;
+    timestamp: Timestamp | FieldValue;
     type: MessageType;
   };
   unreadCount?: { [userId: string]: number };

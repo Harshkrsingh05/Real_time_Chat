@@ -72,7 +72,10 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen flex flex-col flex-wrap items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <div className="text-center mb-8">
+        <h1 className="text-5xl font-bold text-gray-900">Real Time Chat</h1>
+      </div>
       <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
