@@ -92,15 +92,19 @@ export const DirectChatRoom: React.FC<DirectChatRoomProps> = ({ chatRoom, onBack
     setLoading(true);
     
     try {
-      const messageData = {
+      const messageData: any = {
         chatRoomId: chatRoom.id,
         senderId: user.uid,
         senderName: userProfile.displayName,
-        senderPhotoURL: userProfile.photoURL || undefined,
         text: newMessage.trim(),
         type: 'text' as const,
         timestamp: serverTimestamp(),
       };
+
+      // Only add senderPhotoURL if it exists
+      if (userProfile.photoURL) {
+        messageData.senderPhotoURL = userProfile.photoURL;
+      }
 
       await addDoc(collection(db, 'messages'), messageData);
 

@@ -103,7 +103,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
                 <input
                   type="text"
                   required
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
                   placeholder="Enter your name"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
@@ -121,7 +121,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
               <input
                 type="email"
                 required
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -138,7 +138,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
               <input
                 type={showPassword ? 'text' : 'password'}
                 required
-                className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black"
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
