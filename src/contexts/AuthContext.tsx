@@ -59,15 +59,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // Create new user profile
         console.log('Creating new user profile for:', user.email);
         const { displayName, email, photoURL } = user;
-        const profile: Omit<UserProfile, 'uid'> = {
+        const profile: any = {
           email: email!,
           displayName: displayName || email!.split('@')[0],
-          photoURL: photoURL || undefined,
           isOnline: true,
           lastSeen: serverTimestamp(),
           createdAt: serverTimestamp(),
           ...additionalData,
         };
+
+        // Only add photoURL if it exists (not null or undefined)
+        if (photoURL) {
+          profile.photoURL = photoURL;
+        }
 
         await setDoc(userRef, profile);
         console.log('User profile created successfully');
